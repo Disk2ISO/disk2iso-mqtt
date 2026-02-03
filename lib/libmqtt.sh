@@ -35,7 +35,7 @@ INITIALIZED_MQTT=false                      # Initialisierung war erfolgreich
 ACTIVATED_MQTT=false                             # In Konfiguration aktiviert
 
 # ===========================================================================
-# check_dependencies_mqtt
+# mqtt_check_dependencies
 # ---------------------------------------------------------------------------
 # Funktion.: Prüfe alle Modul-Abhängigkeiten (Modul-Dateien, Ausgabe-Ordner, 
 # .........  kritische und optionale Software für die Ausführung des Modul),
@@ -45,7 +45,7 @@ ACTIVATED_MQTT=false                             # In Konfiguration aktiviert
 # .........  1 = Nicht verfügbar (Modul deaktiviert)
 # Extras...: Setzt SUPPORT_MQTT=true bei erfolgreicher Prüfung
 # ===========================================================================
-check_dependencies_mqtt() {
+mqtt_check_dependencies() {
     log_debug "$MSG_DEBUG_MQTT_CHECK_START"
 
     #-- Alle Modul Abhängigkeiten prüfen -------------------------------------
@@ -159,7 +159,7 @@ _mqtt_get_defaults() {
 # Setzt....: MQTT_BROKER, MQTT_PORT, MQTT_USER, MQTT_PASSWORD,
 # .........  MQTT_TOPIC_PREFIX, MQTT_CLIENT_ID, MQTT_QOS, MQTT_RETAIN
 # Nutzt....: get_ini_value() aus libconfig.sh
-# Hinweis..: Wird von check_dependencies_mqtt() aufgerufen
+# Hinweis..: Wird von mqtt_check_dependencies() aufgerufen
 # .........  MQTT_ENABLED wird aus disk2iso.conf gelesen (bleibt unverändert)
 # ===========================================================================
 load_mqtt_config() {
