@@ -167,14 +167,14 @@ load_mqtt_config() {
     local broker port user password topic_prefix client_id qos retain
 
     #-- Lese MQTT-Konfiguration aus INI (mit Defaults) ----------------------
-    broker=$(config_get_value_ini "mqtt" "api" "broker" "$(_mqtt_get_defaults broker)")
-    port=$(config_get_value_ini "mqtt" "api" "port" "$(_mqtt_get_defaults port)")
-    user=$(config_get_value_ini "mqtt" "api" "user" "$(_mqtt_get_defaults user)")
-    password=$(config_get_value_ini "mqtt" "api" "password" "$(_mqtt_get_defaults password)")
-    topic_prefix=$(config_get_value_ini "mqtt" "api" "topic_prefix" "$(_mqtt_get_defaults topic_prefix)")
-    client_id=$(config_get_value_ini "mqtt" "api" "client_id" "$(_mqtt_get_defaults client_id)")
-    qos=$(config_get_value_ini "mqtt" "api" "qos" "$(_mqtt_get_defaults qos)")
-    retain=$(config_get_value_ini "mqtt" "api" "retain" "$(_mqtt_get_defaults retain)")
+    broker=$(settings_get_value_ini "mqtt" "api" "broker" "$(_mqtt_get_defaults broker)")
+    port=$(settings_get_value_ini "mqtt" "api" "port" "$(_mqtt_get_defaults port)")
+    user=$(settings_get_value_ini "mqtt" "api" "user" "$(_mqtt_get_defaults user)")
+    password=$(settings_get_value_ini "mqtt" "api" "password" "$(_mqtt_get_defaults password)")
+    topic_prefix=$(settings_get_value_ini "mqtt" "api" "topic_prefix" "$(_mqtt_get_defaults topic_prefix)")
+    client_id=$(settings_get_value_ini "mqtt" "api" "client_id" "$(_mqtt_get_defaults client_id)")
+    qos=$(settings_get_value_ini "mqtt" "api" "qos" "$(_mqtt_get_defaults qos)")
+    retain=$(settings_get_value_ini "mqtt" "api" "retain" "$(_mqtt_get_defaults retain)")
     
     #-- Setze Variablen mit Defaults (INI-Werte überschreiben Defaults) -----
     #-- Prüfe zuerst ob Wert bereits aus disk2iso.conf gesetzt wurde --------
