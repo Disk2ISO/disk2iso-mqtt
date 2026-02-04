@@ -92,7 +92,7 @@ def api_mqtt_widget():
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
     # Rendere Widget-Template
-    return render_template('widgets/mqtt_widget.html',
+    return render_template('widgets/mqtt_widget_2x1_status.html',
         mqtt_status=mqtt_status,
         current_time=current_time,
         t=g.t  # Translations
@@ -107,7 +107,7 @@ def api_mqtt_settings_widget():
     """
     config = get_config()
     
-    return render_template('widgets/mqtt_widget_settings.html',
+    return render_template('widgets/mqtt_widget_4x1_settings.html',
         config=config,
         t=g.t  # Translations
     )
