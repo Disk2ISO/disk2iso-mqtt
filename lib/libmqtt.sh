@@ -13,7 +13,7 @@
 #
 # ---------------------------------------------------------------------------
 # Dependencies: liblogging.sh (log_debug, log_info, log_warning, log_error)
-#               libconfig.sh (get_module_ini_path, get_ini_value)
+#               libsettings.sh (get_module_ini_path, get_ini_value)
 #               libapi.sh (api_read_json)
 #               Externes Tool: mosquitto_pub
 # ---------------------------------------------------------------------------
@@ -158,7 +158,7 @@ _mqtt_get_defaults() {
 # Rückgabe.: 0 = Erfolgreich geladen
 # Setzt....: MQTT_BROKER, MQTT_PORT, MQTT_USER, MQTT_PASSWORD,
 # .........  MQTT_TOPIC_PREFIX, MQTT_CLIENT_ID, MQTT_QOS, MQTT_RETAIN
-# Nutzt....: config_get_value_ini() aus libconfig.sh
+# Nutzt....: config_get_value_ini() aus libsettings.sh
 # Hinweis..: Wird von mqtt_check_dependencies() aufgerufen
 # .........  MQTT_ENABLED wird aus disk2iso.conf gelesen (bleibt unverändert)
 # ===========================================================================
@@ -605,10 +605,10 @@ mqtt_export_config_json() {
     local qos=$(_mqtt_get_defaults qos)
     local retain=$(_mqtt_get_defaults retain)
     
-    #-- Source libconfig.sh um get_ini_value() zu nutzen --------------------
+    #-- Source libsettings.sh um get_ini_value() zu nutzen ------------------
     local lib_dir="${INSTALL_DIR:-/opt/disk2iso}/lib"
-    if [[ -f "$lib_dir/libconfig.sh" ]]; then
-        source "$lib_dir/libconfig.sh"
+    if [[ -f "$lib_dir/libsettings.sh" ]]; then
+        source "$lib_dir/libsettings.sh"
     fi
     
     #-- Lese Werte aus disk2iso.conf (überschreibt Defaults) ---------------
@@ -677,12 +677,12 @@ mqtt_update_config() {
     local mqtt_user=$(echo "$json_input" | jq -r '.mqtt_user // ""' 2>/dev/null)
     local mqtt_password=$(echo "$json_input" | jq -r '.mqtt_password // ""' 2>/dev/null)
     
-    #-- Source libconfig.sh um Setter-Funktionen zu nutzen ------------------
+    #-- Source libsettings.sh um Setter-Funktionen zu nutzen -----------------
     local lib_dir="${INSTALL_DIR:-/opt/disk2iso}/lib"
-    if [[ -f "$lib_dir/libconfig.sh" ]]; then
-        source "$lib_dir/libconfig.sh"
+    if [[ -f "$lib_dir/libsettings.sh" ]]; then
+        source "$lib_dir/libsettings.sh"
     else
-        echo '{"success": false, "error": "libconfig.sh nicht gefunden"}'
+        echo '{"success": false, "error": "libsettings.sh nicht gefunden"}'
         return 1
     fi
     
