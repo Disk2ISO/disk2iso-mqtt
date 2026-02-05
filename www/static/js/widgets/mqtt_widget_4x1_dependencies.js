@@ -22,9 +22,9 @@ function updateMqttDependencies(softwareList) {
     const tbody = document.getElementById('mqtt-dependencies-tbody');
     if (!tbody) return;
     
-    // MQTT-spezifische Tools
+    // MQTT-spezifische Tools (aus libmqtt.ini [dependencies])
     const mqttTools = [
-        { name: 'mosquitto', display_name: 'Mosquitto' }
+        { name: 'mosquitto_pub', display_name: 'Mosquitto Publisher' }
     ];
     
     let html = '';
@@ -32,21 +32,12 @@ function updateMqttDependencies(softwareList) {
     mqttTools.forEach(tool => {
         const software = softwareList.find(s => s.name === tool.name);
         if (software) {
-            const statusBadge = getStatusBadge(software);
-            const rowClass = !software.installed_version ? 'row-inactive' : '';
-            
-            html += `
-                <tr class="${rowClass}">
-                    <td><strong>${tool.display_name}</strong></td>
-                    <td>${software.installed_version || '<em>Nicht installiert</em>'}</td>
-                    <td>${statusBadge}</td>
-                </tr>
-            `;
+            html += renderSoftwareRow(tool.display_name, software);
         }
     });
     
     if (html === '') {
-        html = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: #999;">Keine Informationen verfügbar</td></tr>';
+        html = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #999;">Keine Informationen verfügbar</td></tr>';
     }
     
     tbody.innerHTML = html;
@@ -56,7 +47,7 @@ function showMqttDependenciesError() {
     const tbody = document.getElementById('mqtt-dependencies-tbody');
     if (!tbody) return;
     
-    tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 20px; color: #e53e3e;">Fehler beim Laden</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px; color: #e53e3e;">Fehler beim Laden</td></tr>';
 }
 
 // Auto-Load

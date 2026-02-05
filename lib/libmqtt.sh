@@ -828,5 +828,61 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 fi
 
 # ============================================================================
+# SOFTWARE INFORMATION (für Widgets)
+# ============================================================================
+
+# ===========================================================================
+# mqtt_collect_software_info
+# ---------------------------------------------------------------------------
+# Funktion.: Sammle MQTT-Modul Software-Informationen
+# Parameter: keine
+# Rückgabe.: 0 = Erfolg, 1 = Fehler
+# Schreibt.: api/mqtt_software_info.json
+# Hinweis..: Liest Dependencies aus libmqtt.ini und nutzt zentrale Prüfung
+# ===========================================================================
+mqtt_collect_software_info() {
+    local api_dir=$(folders_get_api_dir) || return 1
+    
+    # Lese externe Dependencies aus INI
+    local external_deps=$(config_get_value_ini "mqtt" "dependencies" "external")
+    # Format: "mosquitto_pub"
+    
+    # Konvertiere zu Array
+    IFS=',' read -ra dep_array <<< "$external_deps"
+    
+    # Rufe zentrale Prüffunktion auf (aus libsysteminfo.sh)
+    local software_json=$(systeminfo_check_software_list "${dep_array[@]}")
+    
+    # Schreibe in Modul-spezifisches JSON
+    echo "$software_json" > "${api_dir}/mqtt_software_info.json"
+    
+    return 0
+}
+
+# ===========================================================================
+# mqtt_get_software_info
+# ---------------------------------------------------------------------------
+# Funktion.: Lese MQTT-Software-Informationen für Widget
+# Parameter: keine
+# Rückgabe.: 0 = Erfolg, 1 = Fehler
+# Ausgabe..: JSON-Array (stdout)
+# Für.....: mqtt_widget_4x1_dependencies
+# Nutzung..: Wird von /api/modules/mqtt/software aufgerufen
+# ===========================================================================
+mqtt_get_software_info() {
+    local api_dir=$(folders_get_api_dir) || return 1
+    local json_file="${api_dir}/mqtt_software_info.json"
+    
+    # Fallback: Sammle Daten wenn JSON nicht existiert
+    if [[ ! -f "$json_file" ]]; then
+        mqtt_collect_software_info || return 1
+    fi
+    
+    # Gib JSON aus
+    cat "$json_file"
+    return 0
+}
+
+# ============================================================================
 # ENDE DER MQTT LIBRARY
 # ============================================================================
