@@ -1,6 +1,6 @@
-"""
+﻿"""
 disk2iso - MQTT Module Routes
-Blueprint für alle MQTT-spezifischen API-Endpoints
+Blueprint fÃ¼r alle MQTT-spezifischen API-Endpoints
 """
 
 from flask import Blueprint, render_template, request, jsonify, g
@@ -15,7 +15,7 @@ mqtt_bp = Blueprint('mqtt', __name__)
 
 # Pfade
 BASE_DIR = Path(__file__).parent.parent.parent
-CONFIG_FILE = BASE_DIR / 'conf' / 'disk2iso.conf'
+SETTINGS_FILE = BASE_DIR / 'conf' / 'disk2iso.conf'
 
 
 def get_mqtt_config():
@@ -70,8 +70,8 @@ def get_mqtt_config():
         }
 
 
-def get_config():
-    """Legacy-Wrapper für Kompatibilität mit bestehendem Code"""
+def get_settings():
+    """Legacy-Wrapper fÃ¼r KompatibilitÃ¤t mit bestehendem Code"""
     return get_mqtt_config()
 
 
@@ -81,10 +81,10 @@ def api_mqtt_widget():
     Rendert das MQTT Service Status Widget
     Zeigt aktuellen MQTT-Service Status
     """
-    config = get_config()
+    settings = get_settings()
     
     # MQTT-Status basierend auf config.sh
-    if config['mqtt_enabled']:
+    if settings['mqtt_enabled']:
         mqtt_status = {'status': 'active', 'running': True}
     else:
         mqtt_status = {'status': 'inactive', 'running': False}
@@ -103,9 +103,9 @@ def api_mqtt_widget():
 def api_mqtt_settings_widget():
     """
     Rendert das MQTT Settings Widget
-    Formular für MQTT-Einstellungen
+    Formular fÃ¼r MQTT-Einstellungen
     """
-    config = get_config()
+    settings = get_settings()
     
     return render_template('widgets/mqtt_widget_4x1_settings.html',
         config=config,
@@ -150,7 +150,7 @@ def api_mqtt_test():
             response = json.loads(result.stdout)
             return jsonify(response)
         except json.JSONDecodeError:
-            return jsonify({'success': False, 'error': 'Ungültige Response vom MQTT-Test'}), 500
+            return jsonify({'success': False, 'error': 'UngÃ¼ltige Response vom MQTT-Test'}), 500
             
     except subprocess.TimeoutExpired:
         return jsonify({'success': False, 'error': 'Verbindungs-Timeout (5s)'}), 408
@@ -161,7 +161,7 @@ def api_mqtt_test():
 @mqtt_bp.route('/api/mqtt/status')
 def api_mqtt_status():
     """
-    Gibt aktuellen MQTT-Status als JSON zurück
+    Gibt aktuellen MQTT-Status als JSON zurÃ¼ck
     
     Response JSON:
     {
@@ -172,14 +172,14 @@ def api_mqtt_status():
         "status": "active"/"inactive"
     }
     """
-    config = get_config()
+    settings = get_settings()
     
     return jsonify({
-        'enabled': config['mqtt_enabled'],
-        'broker': config['mqtt_broker'],
-        'port': config['mqtt_port'],
-        'authenticated': bool(config['mqtt_user']),
-        'status': 'active' if config['mqtt_enabled'] else 'inactive'
+        'enabled': settings['mqtt_enabled'],
+        'broker': settings['mqtt_broker'],
+        'port': settings['mqtt_port'],
+        'authenticated': bool(settings['mqtt_user']),
+        'status': 'active' if settings['mqtt_enabled'] else 'inactive'
     })
 
 
@@ -222,10 +222,11 @@ def api_mqtt_save():
             response = json.loads(result.stdout)
             return jsonify(response)
         except json.JSONDecodeError:
-            return jsonify({'success': False, 'error': 'Ungültige Response vom Config-Update'}), 500
+            return jsonify({'success': False, 'error': 'UngÃ¼ltige Response vom Config-Update'}), 500
         
     except subprocess.TimeoutExpired:
         return jsonify({'success': False, 'error': 'Timeout beim Speichern'}), 408
     except Exception as e:
         print(f"Fehler beim Speichern der MQTT-Konfiguration: {e}", file=sys.stderr)
         return jsonify({'success': False, 'error': str(e)}), 500
+

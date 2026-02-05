@@ -16,7 +16,7 @@ mqtt_settings_bp = Blueprint('mqtt_settings', __name__)
 
 # Pfade
 BASE_DIR = Path(__file__).parent.parent.parent.parent
-CONFIG_FILE = BASE_DIR / 'conf' / 'disk2iso.conf'
+SETTINGS_FILE = BASE_DIR / 'conf' / 'disk2iso.conf'
 
 
 def get_mqtt_settings():
@@ -81,7 +81,7 @@ def api_mqtt_settings_widget():
     
     # Rendere Widget-Template
     return render_template('widgets/mqtt_widget_settings.html',
-                         config=config,
+                         settings=settings,
                          t=t)
 
 
@@ -101,7 +101,7 @@ def api_mqtt_save():
         mqtt_password = data.get('mqtt_password', '')
         
         # Baue Konfigurations-Dict
-        config = {
+        settings = {
             'mqtt_enabled': mqtt_enabled,
             'mqtt_broker': mqtt_broker,
             'mqtt_port': mqtt_port,
@@ -147,7 +147,7 @@ def api_mqtt_test():
         data = request.get_json()
         
         # Baue Test-Konfiguration
-        config = {
+        settings = {
             'broker': data.get('broker', ''),
             'port': int(data.get('port', 1883)),
             'user': data.get('user', ''),
@@ -180,3 +180,5 @@ def api_mqtt_test():
             'success': False,
             'error': str(e)
         }), 500
+
+

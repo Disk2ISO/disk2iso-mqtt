@@ -8,44 +8,44 @@
     
     <div class="form-group">
         <label>
-            <input type="checkbox" id="mqtt_enabled" name="mqtt_enabled" {{ 'checked' if config.mqtt_enabled else '' }}>
+            <input type="checkbox" id="mqtt_enabled" name="mqtt_enabled" {{ 'checked' if settings.mqtt_enabled else '' }}>
             {{ t.SYSTEM_MQTT_ENABLED if t else 'MQTT aktivieren' }}
         </label>
         <div class="help-text">Aktiviert Home Assistant Integration via MQTT</div>
     </div>
     
-    <div id="mqtt-settings" style="{{ 'display: block;' if config.mqtt_enabled else 'display: none;' }}">
+    <div id="mqtt-settings" style="{{ 'display: block;' if settings.mqtt_enabled else 'display: none;' }}">
         <div class="form-group">
             <label for="mqtt_broker">MQTT Broker</label>
-            <input type="text" id="mqtt_broker" name="mqtt_broker" value="{{ config.mqtt_broker }}" placeholder="192.168.20.10">
+            <input type="text" id="mqtt_broker" name="mqtt_broker" value="{{ settings.mqtt_broker }}" placeholder="192.168.20.10">
             <div class="help-text">IP-Adresse oder Hostname des MQTT Brokers</div>
         </div>
         
         <div class="form-group">
             <label for="mqtt_port">MQTT Port</label>
-            <input type="number" id="mqtt_port" name="mqtt_port" value="{{ config.mqtt_port }}" min="1" max="65535" placeholder="1883">
+            <input type="number" id="mqtt_port" name="mqtt_port" value="{{ settings.mqtt_port }}" min="1" max="65535" placeholder="1883">
             <div class="help-text">Standard: 1883</div>
         </div>
         
         <div class="form-group">
             <label>
-                <input type="checkbox" id="mqtt_auth_enabled" {{ 'checked' if config.mqtt_user else '' }}>
+                <input type="checkbox" id="mqtt_auth_enabled" {{ 'checked' if settings.mqtt_user else '' }}>
                 MQTT Anmeldung erforderlich
             </label>
             <div class="help-text">Aktivieren wenn Broker Authentifizierung benötigt</div>
         </div>
         
-        <div id="mqtt-auth-settings" style="{{ 'display: block;' if config.mqtt_user else 'display: none;' }}">
+        <div id="mqtt-auth-settings" style="{{ 'display: block;' if settings.mqtt_user else 'display: none;' }}">
             <div class="form-group">
                 <label for="mqtt_user">MQTT Benutzername</label>
-                <input type="text" id="mqtt_user" name="mqtt_user" value="{{ config.mqtt_user }}" placeholder="">
+                <input type="text" id="mqtt_user" name="mqtt_user" value="{{ settings.mqtt_user }}" placeholder="">
                 <div class="help-text">Benutzername für MQTT Broker</div>
             </div>
             
             <div class="form-group">
                 <label for="mqtt_password">MQTT Passwort</label>
                 <div class="password-input-wrapper">
-                    <input type="password" id="mqtt_password" name="mqtt_password" class="password-input" value="{{ config.mqtt_password }}" placeholder="">
+                    <input type="password" id="mqtt_password" name="mqtt_password" class="password-input" value="{{ settings.mqtt_password }}" placeholder="">
                     <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('mqtt_password')" title="Passwort anzeigen/verbergen">
                         <span class="toggle-icon" id="mqtt_password_icon">👁️</span>
                     </button>
@@ -62,3 +62,4 @@
         </div>
     </div>
 </div>
+
