@@ -1,5 +1,5 @@
 /**
- * MQTT Module - Widget Loader & Status Updater
+ * Status Widget (2x1) - MQTT
  * 
  * Funktionen:
  * - Lädt MQTT Service Widget dynamisch in index.html
@@ -16,7 +16,7 @@
      */
     async function loadMqttWidget() {
         try {
-            const response = await fetch('/api/mqtt/widget');
+            const response = await fetch('/api/widgets/mqtt/status');
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }

@@ -80,8 +80,8 @@ def api_mqtt_settings_widget():
     config = get_mqtt_settings()
     
     # Rendere Widget-Template
-    return render_template('widgets/mqtt_widget_settings.html',
-                         settings=settings,
+    return render_template('widgets/settings_4x1_mqtt.html',
+                         settings=config,
                          t=t)
 
 

@@ -1,11 +1,11 @@
 /**
- * MQTT Module - Dependencies Widget (4x1)
+ * Dependencies Widget (4x1) - MQTT
  * Zeigt MQTT spezifische Tools (mosquitto clients)
  * Version: 1.0.0
  */
 
 function loadMqttDependencies() {
-    fetch('/api/system')
+    fetch('/api/widgets/mqtt/dependencies')
         .then(response => response.json())
         .then(data => {
             if (data.success && data.software) {

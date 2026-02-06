@@ -1,5 +1,5 @@
 /**
- * disk2iso - MQTT Widget Settings
+ * disk2iso - Settings Widget (4x1) - MQTT
  * Dynamisches Laden und Verwalten der MQTT-Einstellungen
  * Auto-Save bei Fokus-Verlust (moderne UX)
  */
