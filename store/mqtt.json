@@ -1,0 +1,65 @@
+{
+  "id": "mqtt",
+  "name": "MQTT Integration",
+  "category": "optional",
+  "description": "Home Assistant Integration mit Auto-Discovery und Echtzeit-Status-Updates",
+  "icon": "https://raw.githubusercontent.com/Disk2ISO/disk2iso-mqtt/main/store/icon.svg",
+  "author": "Disk2ISO Team",
+  "homepage": "https://github.com/Disk2ISO/disk2iso-mqtt",
+  "repository": "https://github.com/Disk2ISO/disk2iso-mqtt",
+  "license": "MIT",
+  "requires": {
+    "disk2iso": ">=1.3.0"
+  },
+  "current_version": "1.3.0",
+  "versions": [
+    {
+      "version": "1.3.0",
+      "released": "2026-02-07",
+      "changelog": "Kompatibilität mit disk2iso 1.3.0 Service-Struktur",
+      "download_url": "https://github.com/Disk2ISO/disk2iso-mqtt/releases/download/v1.3.0/mqtt-module.zip",
+      "checksum_url": "https://github.com/Disk2ISO/disk2iso-mqtt/releases/download/v1.3.0/mqtt-module.zip.sha256",
+      "size": "TBD"
+    },
+    {
+      "version": "1.0.0",
+      "released": "2026-01-29",
+      "changelog": "Initiales Release mit Home Assistant Auto-Discovery",
+      "download_url": "https://github.com/Disk2ISO/disk2iso-mqtt/releases/download/v1.0.0/mqtt-module.zip",
+      "checksum_url": "https://github.com/Disk2ISO/disk2iso-mqtt/releases/download/v1.0.0/mqtt-module.zip.sha256",
+      "size": "TBD"
+    }
+  ],
+  "install_method": "unzip",
+  "install_path": "/opt/disk2iso/",
+  "post_install": [
+    "sudo systemctl restart disk2iso-web"
+  ],
+  "features": [
+    "Home Assistant Auto-Discovery",
+    "Echtzeit-Status-Updates (idle/copying/waiting/completed/error)",
+    "Fortschritts-Tracking (%, MB, ETA)",
+    "Medium-Informationen (Label, Typ, Größe)",
+    "Availability-Monitoring",
+    "Observer Pattern für automatische Updates",
+    "CLI-Interface für Scripting",
+    "Web-UI Widget mit Auto-Save"
+  ],
+  "dependencies": {
+    "system": [
+      "mosquitto-clients"
+    ]
+  },
+  "setup_required": {
+    "mqtt_broker": "MQTT Broker (z.B. Mosquitto, Home Assistant) erforderlich"
+  },
+  "home_assistant": {
+    "auto_discovery": true,
+    "sensors": [
+      "sensor.disk2iso_status",
+      "sensor.disk2iso_progress",
+      "sensor.disk2iso_disc_label",
+      "sensor.disk2iso_disc_type"
+    ]
+  }
+}
