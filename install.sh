@@ -71,7 +71,7 @@ chmod 644 "$INSTALL_DIR/doc/04_Module/04-5_MQTT.md"
 # Copy web interface components (if exist)
 if [ -d "www" ]; then
     echo -e "${YELLOW}Installing web interface components...${NC}"
-    cp -rv www/* "$INSTALL_DIR/www/"
+    cp -rv www/* "$INSTALL_DIR/services/disk2iso-web/"
 fi
 
 echo -e "${GREEN}✓ $MODULE_NAME installed successfully${NC}"
