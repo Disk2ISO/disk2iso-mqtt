@@ -14,7 +14,7 @@
 # ---------------------------------------------------------------------------
 # Dependencies: liblogging.sh (log_debug, log_info, log_warning, log_error)
 #               libsettings.sh (get_module_ini_path, get_ini_value)
-#               libapi.sh (api_read_json)
+#               libapi.sh (api_get_file_json)
 #               Externes Tool: mosquitto_pub
 # ---------------------------------------------------------------------------
 # Author: D.Götze
@@ -410,11 +410,11 @@ mqtt_publish_from_api() {
 # ===========================================================================
 mqtt_publish_state_from_api() {
     #-- Lese JSON aus API ---------------------------------------------------
-    local state_json=$(api_read_json "status.json") || {
+    local state_json=$(api_get_file_json "status.json") || {
         log_warning "$MSG_WARN_MQTT_STATUS_UNREADABLE"
         return 1
     }
-    local attr_json=$(api_read_json "attributes.json") || {
+    local attr_json=$(api_get_file_json "attributes.json") || {
         log_warning "$MSG_WARN_MQTT_ATTRIBUTES_UNREADABLE"
         return 1
     }
@@ -463,11 +463,11 @@ mqtt_publish_state_from_api() {
 # ===========================================================================
 mqtt_publish_progress_from_api() {
     #-- Lese JSON aus API ---------------------------------------------------
-    local progress_json=$(api_read_json "progress.json") || {
+    local progress_json=$(api_get_file_json "progress.json") || {
         log_warning "$MSG_WARN_MQTT_PROGRESS_UNREADABLE"
         return 1
     }    
-    local attr_json=$(api_read_json "attributes.json") || {
+    local attr_json=$(api_get_file_json "attributes.json") || {
         log_warning "$MSG_WARN_MQTT_ATTRIBUTES_UNREADABLE"
         return 1
     }
